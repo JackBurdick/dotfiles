@@ -1,0 +1,106 @@
+# editor
+alias c="code "
+alias nano="nano -l"
+alias v="vim"
+
+## add ll
+alias ll='ls -lGaf'
+alias l='ls -lFG'
+alias l.='ls -dGF .*'
+alias lg='ll |grep --colour=auto '
+
+# history
+alias h='history'
+alias hg='history|grep --colour=auto '
+
+# ps
+alias pg="ps aux|grep --colour=auto "
+
+# git
+alias gb="git branch"
+alias g--="git checkout -- "
+alias gd="git diff"
+
+# add conda aliases
+alias xxx='conda deactivate'
+
+# directory nav
+alias ..='cd ..'
+alias ..l='cd .. && ll'
+alias ...='cd ../..'
+alias ...l='cd ../.. && ll'
+alias ....='cd ../../..'
+alias ....l='cd ../../.. && ll'
+alias .4='cd ../../../..'
+alias .4l='cd ../../../.. && ll'
+
+# common
+alias cdd='cd ~/dev/'
+alias cdg='cd ~/dev/github'
+
+## Jupyter
+alias jjj='jupyter notebook'
+
+# python
+alias mypyy='mypy --follow-imports=error --ignore-missing-imports --disallow-untyped-calls --disallow-untyped-defs --disallow-incomplete-defs --check-untyped-defs --disallow-any-unimported --disallow-untyped-decorators --warn-redundant-casts --strict'
+
+alias pds='pydocstyle --ignore=D100,D213'
+
+alias aflake='autoflake -i --remove-all-unused-imports --remove-unused-variables'
+
+# all py
+apy() {
+    pds $1
+    echo 'done pds'
+    mypyy $1
+    echo 'done aflake'
+    isort $1
+    echo 'done isort'
+    black $1
+    echo 'done black'
+}
+
+# format py
+fpy() {
+    aflake $1
+    isort $1
+    black $1
+    echo 'done format'
+}
+
+tb() {
+    if [ -z "$1" ]
+    then
+        tensorboard --logdir tf_logs
+    else
+        tensorboard --logdir $1
+    fi
+}
+
+# git autocomplete
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
+
+gitsq () {
+    # https://stackoverflow.com/questions/42312671/getopts-not-working-inside-bashrc?noredirect=1&lq=1
+    local OPTARG
+    local opt
+    NUM_COMMITS=;
+
+    while getopts "n:" opt; do
+        case "$opt" 
+            in
+            n)  NUM_COMMITS=${OPTARG};;
+        esac
+    done
+
+    # -n option is mandatory
+    if [ -z "${NUM_COMMITS}" ]
+    then
+      echo "no num_commits passed, please use -n"
+    else
+      # https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git/5201642#5201642
+      git reset --soft HEAD~"$NUM_COMMITS" && git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
+    fi
+}
