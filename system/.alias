@@ -23,6 +23,7 @@ alias gd="git diff"
 
 # add conda aliases
 alias xxx='conda deactivate'
+alias ddd='conda activate daily'
 
 # directory nav
 alias ..='cd ..'
@@ -78,6 +79,8 @@ tb() {
 }
 
 # git autocomplete
+# curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+# https://apple.stackexchange.com/questions/55875/git-auto-complete-for-branches-at-the-command-line
 if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
@@ -104,3 +107,15 @@ gitsq () {
       git reset --soft HEAD~"$NUM_COMMITS" && git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
     fi
 }
+
+# allow vim bindings in terminal
+set -o vi
+
+# include git branch in terminal prompt
+# TODO: can this be updated to include whether there are changes?
+# https://www.mfitzp.com/article/add-git-branch-name-to-terminal-prompt-mac/
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
