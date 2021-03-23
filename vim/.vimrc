@@ -2,7 +2,7 @@
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
 
 " directory tree
 Plug 'scrooloose/nerdtree'
@@ -19,8 +19,9 @@ Plug 'tpope/vim-fugitive'
 " Plug 'junegunn/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
-" surround
+" Parenthesis and quotes
 Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 
 " commenter
 Plug 'preservim/nerdcommenter'
@@ -30,10 +31,11 @@ Plug 'w0rp/ale'
 
 " depending
 " python formatter
-" Plug 'ambv/black'
-
+Plug 'ambv/black'
+Plug 'fisadev/vim-isort'
 " autocomplete
 " Plug 'zxqfl/tabnine-vim'
+
 
 call plug#end()
 
@@ -54,15 +56,26 @@ call plug#end()
 "   endif
 " endif
 
+set backspace=indent,eol,start
+
+" E501 : max line length
+" E741 : Do not use variables named 'I', 'O', or 'l'
+" E203 : Whitespace before ':'
+let g:ale_python_flake8_options = '--ignore=E501,E741,E203'
+
 syntax on
 set hlsearch
 set incsearch
 
 " indent size
 set sw=4
-colorscheme onedark
+" colorscheme onedark
+colorscheme one
+"set background=dark "dark version
+set background=light "light version
 set nu
 set fileformat=unix
+let g:airline_theme='one'
 " set t_Co=256
 " let g:airline_theme='base16_spacemacs'
 " let g:AirlineTheme='base16_colors'
@@ -77,4 +90,11 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 
-"let g:syntastic_python_python_exec = '/home/jackburdick/anaconda3/envs/tf2/bin/python' 
+let g:vim_isort_python_version = 'python3'
+let g:ale_linters = {
+	    \ 'python': ['flake8'],}
+
+" iSort help
+" :py3 import sys; print(sys.path)
+" /usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/3.9/bin
+" ./python3.9 -m pip install isort
