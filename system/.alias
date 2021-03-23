@@ -20,6 +20,7 @@ alias pg="ps aux|grep --colour=auto "
 alias gb="git branch"
 alias g--="git checkout -- "
 alias gd="git diff"
+alias gnb="git checkout -b"
 
 # add conda aliases
 alias xxx='conda deactivate'
