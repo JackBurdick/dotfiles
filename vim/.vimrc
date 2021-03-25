@@ -4,6 +4,9 @@ call plug#begin('~/.vim/plugged')
 " theme
 Plug 'rakr/vim-one'
 
+" jump to definition
+Plug 'pechorin/any-jump.vim'
+
 " directory tree
 Plug 'scrooloose/nerdtree'
 
@@ -16,7 +19,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " fuzzy search
-" Plug 'junegunn/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Parenthesis and quotes
@@ -29,13 +31,12 @@ Plug 'preservim/nerdcommenter'
 " formatter
 Plug 'w0rp/ale'
 
-" depending
 " python formatter
 Plug 'ambv/black'
 Plug 'fisadev/vim-isort'
-" autocomplete
-" Plug 'zxqfl/tabnine-vim'
 
+" autocomplete
+Plug 'codota/tabnine-vim'
 
 call plug#end()
 
@@ -61,7 +62,8 @@ set backspace=indent,eol,start
 " E501 : max line length
 " E741 : Do not use variables named 'I', 'O', or 'l'
 " E203 : Whitespace before ':'
-let g:ale_python_flake8_options = '--ignore=E501,E741,E203'
+" W503 : Line break occurred before a binary operator
+let g:ale_python_flake8_options = '--ignore=E501,E741,E203,W503'
 
 syntax on
 set hlsearch
