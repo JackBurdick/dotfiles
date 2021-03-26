@@ -35,9 +35,6 @@ Plug 'w0rp/ale'
 Plug 'ambv/black'
 Plug 'fisadev/vim-isort'
 
-" autocomplete
-Plug 'codota/tabnine-vim'
-
 call plug#end()
 
 
@@ -95,6 +92,14 @@ let g:fzf_action = {
 let g:vim_isort_python_version = 'python3'
 let g:ale_linters = {
 	    \ 'python': ['flake8'],}
+
+
+function! FPY()
+    Isort
+    Black
+endfunction
+
+command F :call FPY()
 
 " iSort help
 " :py3 import sys; print(sys.path)
