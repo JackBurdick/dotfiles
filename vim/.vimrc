@@ -10,6 +10,12 @@ Plug 'pechorin/any-jump.vim'
 " directory tree
 Plug 'scrooloose/nerdtree'
 
+" fold
+Plug 'konfekt/fastfold'
+
+" python fold
+Plug 'tmhedberg/simpylfold'
+
 " status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
